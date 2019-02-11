@@ -78,11 +78,21 @@ The installation package contains all that you need to configure the integration
     * `<path>bmcbppm30/bmcbppm.xml</path>`
 4. Save and close the file.
 5. Open the `configuration.js` file found in the `<IAHOME>\integrationservices\bmcbppm30` folder and add or set the values for the following variables:
-| Variable        | Description           |
-| ------------- |:-------------:|
-| WEB_SERVICE_URL| See [Accessing Web Service URL's](https://github.com/matthewhenry1/xm-labs-bmc-bppm-truesight#accessing-web-service-urls)|
-| col 2 is      | centered      |
-| zebra stripes | are neat      |
+    * **WEB_SERVICE_URL**: See [Accessing Web Service URL's](https://github.com/matthewhenry1/xm-labs-bmc-bppm-truesight#accessing-web-service-urls)
+    * **BPPM_CELL**: Name of the BPPM cell
+    * **IIWS_URL**: BMC Impact Integration Web Services endpoint
+    * **INITIATOR**: The User ID of the integration user you configured in xMatters.
+    * **PASSWORD**: Path and filename of the password file containing the encrypted REST API user's password. For more information about creating this file, see Setting password files, below.
+    * **DEDUPLICATOR_FILTER_NAME**: Must be set to "bmcbppm30" for this integration.
+    * **ANNOTATE_DELIVERY**: true or false - indicates whether to include xMatters delivery annotations in BPPM event logs/notes
+    * **MAP_XM_PRIORITY**: Indicates which BPPM value to map to xMatters priority levels; valid values are:
+      * priority
+      * severity
+      * none
+    * **REST_SERVICE_URL**: The xMatters REST API URL; Replace the <company> and <environment> placeholders with the company name and environment of your xMatters instance URL.
+
+
+
 
 
 
