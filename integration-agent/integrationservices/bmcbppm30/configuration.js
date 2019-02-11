@@ -3,12 +3,12 @@
 // ----------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------------------------------
-// This value determines the form that will be used to inject events into xMatters if no form parameter 
+// This value determines the form that will be used to inject events into xMatters if no form parameter
 // is present in the request. The retrieve or terminate event requests are also based on this URL
 // ----------------------------------------------------------------------------------------------------
 var WEB_SERVICE_URL = "https://<customer>.<environment>.xmatters.com/reapi/2015-04-01/forms/588dc17b-c6c3-4eda-8bb3-df742ee0498c/triggers";
 
-// ***************************************************************************** 
+// *****************************************************************************
 // This variable must be changed when the integration is installed.
 // Name of the BPPM cell being integrated with. Referred to as $CELL in the
 // integration manual
@@ -18,7 +18,7 @@ var BPPM_CELL = "BPPM_CELL_NAME";
 // -----------------------------------------------------------------------------
 // Constants used by the BMC Impact Integration Web services.
 // -----------------------------------------------------------------------------
-// IMWS Web Service Endpoint 
+// IMWS Web Service Endpoint
 var IIWS_URL = "http://localhost:9080/imws/services/ImpactManager";
 
 // ----------------------------------------------------------------------------------------------------
@@ -44,19 +44,6 @@ var IIWS_RETRIEVE_QUERY_RESULTS_TIMEOUT = "3000"
 // Used for the <subject> element of IMWS SendEvent messages
 // ----------------------------------------------------------------------------------------------------
 var IIWS_SEND_EVENT_SUBJECT = "AXIS Client Events";
-
-// ----------------------------------------------------------------------------------------------------
-// PROXY settings for xMatters POST
-// XMATTERS_PROXY_USER and XMATTERS_PROXY_USER_PWD_FILE must be defined or integration script fails
-// XMATTERS_PROXY_USER and XMATTERS_PROXY_USER_PWD_FILE if not used should equal ""
-// XMATTERS_PROXY_USER_PWD_FILE must be encrypted using the IA iapassword utility
-// ----------------------------------------------------------------------------------------------------
-var XMATTERS_PROXY_USE = true or false;
-var XMATTERS_PROXY_HOST = "";
-var XMATTERS_PROXY_PORT = "";
-var XMATTERS_PROXY_USER = "";
-var XMATTERS_PROXY_USER_PWD_FILE = "";
-var XMATTERS_PROXY_NTLM_DOMAIN = "";
 
 // ----------------------------------------------------------------------------------------------------
 // The username and password used to authenticate the request to xMatters.
@@ -88,13 +75,13 @@ var DELETE_EXISTING_EVENTS = true;
 var ANNOTATE_DELIVERY = true;
 
 // ----------------------------------------------------------------------------------------------------
-// Map BPPM Priority ("priority") OR BPPM Severity ("severity") OR no priority ("none") to 
+// Map BPPM Priority ("priority") OR BPPM Severity ("severity") OR no priority ("none") to
 // xMatters Priority levels (Low, Medium, High)
 // ----------------------------------------------------------------------------------------------------
 var MAP_XM_PRIORITY = "severity";
 
 // ----------------------------------------------------------------------------------------------------
-// Identify global values for comment prefix and users 
+// Identify global values for comment prefix and users
 // ----------------------------------------------------------------------------------------------------
 var NOTE_PREFIX = "[xMatters] - "; // The Prefix which is added to the note comments e.g. "[xMatters] - "
 var CALLOUT_USER = "xMatters"; // Username associated with callout annotations
