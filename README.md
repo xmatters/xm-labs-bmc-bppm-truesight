@@ -35,13 +35,13 @@ It is recommended that you use the following formats for the REST API user's Use
 * **bppm-rest-<company name>** for your xMatters production environment.
 
 **To create a REST API user:**
-1.) Log in to the target xMatters system.
-2.) On the Users tab, click the Add New User icon.
-3.) Enter the appropriate information for your new user.
-4.) Assign the REST Web Service User role to the user.
-5.) Click Save.
-6.) On the next page, set the web login ID and password.
-7.) Make a note of these details; you will need them when configuring other parts of this integration.
+1. Log in to the target xMatters system.
+2. On the Users tab, click the Add New User icon.
+3. Enter the appropriate information for your new user.
+4. Assign the REST Web Service User role to the user.
+5. Click Save.
+6. On the next page, set the web login ID and password.
+7. Make a note of these details; you will need them when configuring other parts of this integration.
 
 
 ### Import the communication plan
