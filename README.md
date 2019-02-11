@@ -163,18 +163,134 @@ There is a known issue due where the BPPM event notification adds an additional 
 
 BMC TrueSight `.baroc` file changes
 
-To avoid a specific compilation issue when deploying this integration on BMC TrueSight, update the im_policies.baroc file.
+To avoid a specific compilation issue when deploying this integration on BMC TrueSight, update the `im_policies.baroc` file.
 
-Locate the im_policies.baroc file within your TrueSight installation and open it a text editor.
-Locate the slot selector_ecf definition, and change the definition from ECF CORE_EVENT; to ECF EVENT;
-Save and close the file.
-The section should now resemble the following:
+1. Locate the `im_policies.baroc` file within your TrueSight installation and open it a text editor.
+2. Locate the slot `selector_ecf` definition, and change the definition from `ECF CORE_EVENT;` to `ECF EVENT;`
+3. Save and close the file.
+    * The section should now resemble the following:
 
 <kbd>
   <img src="media/barocFile.png">
 </kbd>
 
-# Testing
+### Compiling files
+Execute the following command to re-compile the files added to the $KB directory of the integrated cell (mccomp is located in the `\pw\server\bin` folder within the BPPM installation directory):
 
+`mccomp -n $CELL`
+If the command executed properly, the last line should state: “Compilation ended successfully”
+
+`xm_notification_policy.baroc` and `xm_notification_service.baroc` (located in `$xM_KB\data`)
+
+1. Copy these files to $KB\data.
+2. To load the contents of these files into the BMC IM database, execute the following commands.
+    * This command creates inactive Notification Policies which can be used as templates for new Notification Policies:
+    ```
+    mposter -n $CELL -d $KB\data\xm_notification_policy.baroc
+    ```
+    * This command creates Notifications Services that will be used by your new Notification Policies:
+    ```
+    mposter -n $CELL -d $KB\data\xm_notification_service.baroc
+    ```
+Successful execution of these commands should result in the following output:
+
+<kbd>
+  <img src="media/BPPM-01.png">
+</kbd>
+
+After completing the above steps, restart the BMC BPPM server.
+
+**To review the Notification Policies**:
+
+1. Launch the BMC ProactiveNet Administration Console.
+2. Under the Administration tab, click the **Event Management Policies** tab.
+3. Open the production node for your BPPM cell.
+4. Open the **By Policy Type** folder, and then open the **Notification Policy** folder.
+
+Inside the Notification Policy folder should be a folder called xMatters, containing the selector called "Selector_xMatters_Template". This selector should have Notification Policy details referring to a policy called "Policy_xMatters_Template".
+
+<kbd>
+  <img src="media/BPPM-02.png">
+</kbd>
+
+The Notification Policies should also reference a Notification Service called "xMatters".
+
+**To review the Notification Services**:
+
+1. Launch the BMC ProactiveNet Administration Console.
+2. Under the Administration tab, click the **Dynamic Data Editor** tab.
+3. Open the production node for your BPPM cell.
+4. Open the nodes **Data** and **Cell Data**, then click on the node **Notification Service**.
+
+This should display a list of Notification Services, including a service named "xMatters".
+
+<kbd>
+  <img src="media/BPPM-03.png">
+</kbd>
+
+### Configuring notifications
+After installing the integration, you must create your own Selectors and Notification Policies using the ProactiveNet Administration Console, or by creating and compiling baroc files in your BPPM Knowledge Base. You can use the template Selectors and Notification Policies as a starting point, or you can define your own Selectors and Notification Policies provided the Notification Policies you create refer to the xMatters Notification Service provided with the integration.
+
+The xMatters and Notification Service can be used without modification and must be the Notification Service associated with any Notification Policy intended to forward events to xMatters.
+
+If you create Notification Policies by copying the template Notification Policy supplied with the integration, make sure you enable your new Notification Policies.
+
+**Note**: For more information on defining Event Management Policies, see the BPPM documentation.
+
+## Validate the integration
+After configuring xMatters and BPPM, you can validate that communication is properly configured. It is recommended that you start the components in the following order:
+
+* BMC ProactiveNet Performance Management
+* BMC Impact Integration Web Services
+* xMatters integration agent (version 5.1.4 or newer)
+Consult the respective user manuals for details on starting these applications.
+
+The following sections will test the combination of xMatters and BPPM for notification delivery and response.
+
+### Triggering a notification
+xMatters for BPPM enables you to send manual and automatic notifications from BPPM to xMatters. For both validation scenarios, confirm that you have a sample user in xMatters to use as a notification recipient.
+
+#### Triggering a manual notification
+
+Use the following steps to trigger a manual notification.
+
+To send a manual notification:
+
+1. Log in to the BPPM Operations Console.
+2. In the All Event Collectors pane, select the event for which you want to send a manual notification.
+3. Click the **Tools** icon for the event, and then select **Remote Actions/Diagnostics** > **xMatters - send Notification**.
+4. In the Execute Action dialog box, enter the ID of the xMatters recipient you want to notify, and then click **Execute**.
+
+#### Triggering automatic notifications
+
+Use the following steps to configure and send automatic notifications.
+
+To send automatic notifications:
+
+1. Log in to the BMC ProactiveNet Administration Console, and then select **Administration** > **Event Management Polices**.
+2. To open the folders or nodes for your production cell, click **By Policy Type** > **Notification Policy** > **xMatters**.
+3. Select **Selector_xMatters_Template**, and then select **Copy and Add Event Policy**.
+4. Type a **Policy Name**, such as xMatters_Notification, and then enable the Policy.
+5. Verify the Notification Service is xMatters.
+6. Edit the **Users to Notify** field, and add the User ID of the xMatters recipient you want to notify.
+7. Click **OK** to save the new Notification Policy.
+8. Click the **Selector Details** tab, and then click **Update Event Selector**.
+9. Modify the selector criteria so the event severity is smaller than or equal to CRITICAL.
+10. Click **OK** again to save changes.
+
+Once you have configured the automatic notification, generate a new event in your BPPM cell that will cause the recipient to receive a notification.
+
+To view the event notification:
+
+1. In the BPPM Operations Console., in the Navigation Pane, open **All Event Collectors** > **Notified Events** > **xMatters** and locate the event you generated.
+2. Select the event, and then expand the **Logs and Notes** panel in the Details pane.
+3. Ensure that there is an entry in the Operations Log stating that a NOTIFICATION_REQUEST was submitted to xMatters.
+4. Close the Logs and Notes panel and wait for 30 seconds.
+5. Re-open the panel and check the Operations Log. There should be entries confirming SUCCESSFUL_DELIVERY by xMatters to the User Devices.
 
 # Troubleshooting
+In an older installation document, the following note appeared:
+```
+BPPM v9.5 and v9.6 require a known workaround from BMC, which has been documented here: https://kb.bmc.com/infocenter/index?page=content&id=KA411757&actp=search&viewlocale=en_US&searchid=1416520611157
+```
+However, the BMC URL has been deprecated. It is unknown what may be required.
