@@ -73,6 +73,14 @@ To retrieve the Web Service URL:
 
 You'll need these URLs when you configure the rest of the integration.
 
+### Configure the Event Domain
+1. Navigate to the Developer tab
+2. On the lefthand side select Event Domains below Domains
+3. From within Event Domains, select applications
+4. Scroll to the bottom and select **Add New**
+5. For the Name field enter: **bmcbppm30**.
+6. Leave everything else blank and then select Save.
+
 ## Configure the Integration Agent
 Now that you've configured xMatters On-Demand, it's time to configure the integration agent. This section assumes you have a successfully connected Integration Agent.
 
