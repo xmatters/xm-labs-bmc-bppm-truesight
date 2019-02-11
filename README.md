@@ -102,7 +102,9 @@ The installation package contains all that you need to configure the integration
 
 1. Open a command prompt and navigate to `<IAHOME>\bin`
 2. Run the following command, where `<password>` is the password for the `INITIATOR` user specified in the `<IAHOME>\integrationservices\bmcbppm30\configuration.js` file:
-`iapassword.bat --new <password> --file integrationservices/bmcbppm30/.initiatorpasswd`
+```
+iapassword.bat --new <password> --file integrationservices/bmcbppm30/.initiatorpasswd
+```
 For more information about working with the iapassword command, and creating password files, refer to the xMatters integration agent guide.
 
 ## BMC BPPM and BMC TrueSight
