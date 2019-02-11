@@ -6,7 +6,7 @@
 // This value determines the form that will be used to inject events into xMatters if no form parameter
 // is present in the request. The retrieve or terminate event requests are also based on this URL
 // ----------------------------------------------------------------------------------------------------
-var WEB_SERVICE_URL = "https://<customer>.<environment>.xmatters.com/reapi/2015-04-01/forms/588dc17b-c6c3-4eda-8bb3-df742ee0498c/triggers";
+var WEB_SERVICE_URL = "https://<customer>.<environment>.xmatters.com/api/integration/1/functions/589ba478-f772-47b9-9845-3743ced100fe/triggers";
 
 // *****************************************************************************
 // This variable must be changed when the integration is installed.
@@ -90,7 +90,7 @@ var TOKEN_NAME_DIAGNOSTIC_RESPONSE = "diagnostic_response";
 // ----------------------------------------------------------------------------------------------------
 // URL for REST web service calls
 // ----------------------------------------------------------------------------------------------------
-REST_SERVICE_URL = "https://<company>.<environment>.xmatters.com/reapi/2015-04-01";
+REST_SERVICE_URL = "https://<company>.<environment>.xmatters.com/api/xm/1/";
 
 /**
  * A global logger for any js files that aren't class definitions using WSUtil as a super-class
