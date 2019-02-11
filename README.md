@@ -90,11 +90,10 @@ The installation package contains all that you need to configure the integration
       * severity
       * none
     * **REST_SERVICE_URL**: The xMatters REST API URL; Replace the <company> and <environment> placeholders with the company name and environment of your xMatters instance URL.
-
-
-
-
-
+6. Save and close the file.
+7. Open the `deduplicator-filter.xml` file found in the `<IAHOME>\integrationservices\conf`folder and add the duplicator filter (everything from `<filter name="bmcbppm30">` to and including `</filter>`) found in the [bmcbppm30](integration-agent/conf) file in the same folder.
+8. Save and close the file.
+9. Restart the integration agent.
 
 ## BMC BPPM and BMC TrueSight
 BPPM v9.5 and v9.6 require a known workaround from BMC, which has been documented here: BMC Knowledge Base article.
