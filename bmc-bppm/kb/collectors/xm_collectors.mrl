@@ -1,0 +1,29 @@
+# ==============================================================================
+# xMatters Integration for BMC ProactiveNet Performance Management
+# ==============================================================================
+
+collector 'Notified Events':
+{
+	r['BPPM Administrators','BPPM Operators','Service Administrators','Service Operators - Senior','Service Operators','Service Managers - Senior','Service Managers']
+	w['BPPM Administrators','BPPM Operators','Service Administrators','Service Operators - Senior','Service Operators','Service Managers - Senior','Service Managers']
+	x['BPPM Administrators','BPPM Operators','Service Administrators','Service Operators - Senior','Service Operators','Service Managers - Senior','Service Managers']
+}
+END
+
+#Static collector to collect all the events on which xMatters notification has performed.
+
+collector 'Notified Events'.xMatters_Replied:
+EVENT where [is_replied_from_XM: matches 'YES']
+END
+
+# amagi: removed until im_internal_notification_workaround_for_collector rule is working
+#collector 'Notified Events'.xMatters:
+#EVENT where [notification_service: matches 'xm_send_notification']
+#END
+
+#The following code will create a dynamic collector which collects the events depending the service exe used in notification.
+#collector 'Notified Events'.*:
+#EVENT where [$THIS.notification_service != '']
+#create $THIS.notification_service
+#END
+

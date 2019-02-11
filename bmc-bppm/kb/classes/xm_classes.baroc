@@ -1,0 +1,19 @@
+# ==============================================================================
+# xMatters Integration for BMC ProactiveNet Performance Management
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Overload the EVENT class to add notification_service and is_replied_from_XM slots.
+# These slots will be used for collectors.
+# ------------------------------------------------------------------------------
+MC_EV_CLASS:
+	EVENT
+	DEFINES
+	{
+	  is_replied_from_XM:STRING, default="NO";
+	  notification_service: STRING;
+	};
+END
+
+
+

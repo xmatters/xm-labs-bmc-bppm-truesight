@@ -1,0 +1,18 @@
+# ==============================================================================
+# xMatters Integration for BMC ProactiveNet Performance Management
+# ==============================================================================
+
+action 'xMatters - send Notification':
+{
+	['BPPM Administrators','BPPM Operators']
+}: EVENT
+	xm_send_notification ['User'] 
+END
+
+action 'xMatters - stop Notification':
+{
+	['BPPM Administrators','BPPM Operators']
+}: EVENT
+	xm_delete_notification ['User'] 
+END
+

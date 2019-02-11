@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ | Service configuration file for the sample ping integration.
+ |
+ | attribute: version
+ | values   : 1.0
+ | comments : identifies the format version of this file
+ |
+ | attribute: xmlns
+ | values   : http://www.alarmpoint.com/schema
+ | comments : the default namespace in which all elements and attributes are
+ |            defined
+ +-->
+<integration-service version="1.0" xmlns="http://www.alarmpoint.com/schema">
+
+  <!--
+   | Each service belongs to an event domain and must have a unique 
+   | (case-sensitive) name within the domain.  In other words, the 
+   | combination of domain and name forms a unique id for the service.
+   +-->
+   <domain>applications</domain>
+   <name>bmcbppm30</name>
+
+  <!--
+   | All services are loaded (i.e., parsed and configured), but only 
+   | active services are allowed to process requests.  Setting a 
+   | service to inactive is useful for temporarily disabling a service 
+   | or debugging a configuration since parsing and validation are always 
+   | be performed, regardless of initial state.
+   | 
+   | NOTE: this value is static and is not changed by the Integration Agent.
+   |
+   | values: active, inactive
+   +-->
+   <initial-state>active</initial-state>
+   
+  <!--
+   | For improved performance, services can concurrently process inbound 
+   | APXML messages (from both APClient and AlarmPoint).  Messages are grouped 
+   | in two stages: first, by priority and second, by process group.  
+   | Messages  within the same group are processed sequentially in a 
+   | first-come-first-served order, while messages in different groups are 
+   | processed concurrently.
+   |
+   | NOTE: The two stage grouping means that normal and high priority messages 
+   | are always processed concurrently, regardless of whether they are in 
+   | the same process group.
+   |
+   | NOTE: A message's priority is specified by the apia_priority token, whose
+   | value is either "normal" or "high".  A message without such a token 
+   | defaults to "normal" priority.
+   |
+   | NOTE: A message's process group is specified by the apia_process_group 
+   | token, whose value is an application-defined string.  Message's without 
+   | such a token are grouped together.
+   |
+   | NOTE: Thread counts must be positive integers.
+   +-->
+   <concurrency>
+     <normal-priority-thread-count>3</normal-priority-thread-count>
+     <high-priority-thread-count>3</high-priority-thread-count>
+   </concurrency>
+
+  <!--
+   | Integration Service Requests are implemented by corresponding methods in a
+   | JavaScript file.  This element defines the location of the script and 
+   | other properties.
+   |
+   | attribute: lang
+   | values   : js
+   | comments : JavaScript is the only supported language
+   +-->
+   <script lang="js">
+    <!--
+     | The relative path (resolved against the directory containing this file), 
+     | of the script implementing the service.
+     |
+     | NOTE: The path may be Unix or Windows-formatted, although it is 
+     | recommended that Unix-formatting be used since it works under both 
+     | environments.
+     |
+     | NOTE: Depending on the OS, paths may be case-sensitive.
+     +-->
+     <file>bmcbppm.js</file>
+   </script>
+   
+  <!--
+   | An Integration Service can make use of the mapped-input, input-action
+   | and response-action data from a JavaClient integration by specifying 
+   | the path to the JavaClient integration XML.
+   |
+   | comments: optional, but if specified, the non-legacy mapped-input
+   | and constants elements in this configuration are ignored.
+   +-->
+   <!--javaclient-->
+    <!--
+     | The relative path (resolved against the directory containing this file),
+     | of a JavaClient integration XML.
+     |
+     | NOTE: The path may be Unix or Windows-formatted, although it is 
+     | recommended that Unix-formatting be used since it works under both 
+     | environments.
+     |
+     | NOTE: Depending on the OS, paths may be case-sensitive.
+     +-->
+     <!--file/-->
+   <!--/javaclient-->
+
+  <!--
+   | The Integration Service scripts and implementation POJOs have access to
+   | all classes stored in <installation>/lib.  However, to prevent conflicts 
+   | and enhance security, an Integration Service should load its own classes 
+   | and resources from an unshared directory.  The classpath element allows 
+   | an Integration Service to specify multiple paths that will be added to 
+   | the service's classpath during the processing of an Integration Service 
+   | Request.
+   |
+   | NOTE: Although this classpath augments the default classpath, which is 
+   | available  to all services), the augmented classpath is exclusive to 
+   | this service.
+   |
+   | NOTE: For the sample integration, there are no auxilliary classes 
+   | needed so this element is empty.
+   +-->
+   <classpath>
+     <path>lib/*.jar</path>
+   </classpath>
+   
+  <!--
+   | Non-legacy Integration Services use the mapped-input element to define 
+   | how an APClient map-data request is transformed into an APXML message.  
+   | The first map-data token is always treated as an agent_client_id APXML 
+   | token.  Subsequent map-data tokens are transformed in order according 
+   | to the following parameter sub-elements.  If too few map-data tokens 
+   | are supplied, the unused parameter sub-elements are ignored.  Conversely, 
+   | if too many map-data tokens are supplied, the unused tokens are ignored.
+   | 
+   | attribute: method
+   | values   : an arbitrary string
+   | comments : the resulting APXML message's method element value
+   |
+   | attribute: subclass
+   | values   : an arbitrary string
+   | comments : optional (defaults to no subclass), the resulting APXML
+   |            message's subclass element value
+   +-->
+   <mapped-input method="add" subclass="event">
+    <!--
+     | 0 or more parameters, each identifying an APXML token, and ordered the 
+     | same as the map-data tokens (beginning with the second map-data 
+     | token).
+     |
+     | attribute: type
+     | values   : auto, string, or numeric
+     | comments : optional (defaults to auto), the APXML token's type 
+     +-->
+     <parameter type="string">recipients</parameter>
+     <parameter type="string">incident_id</parameter>
+     <parameter type="string">severity</parameter>
+     <parameter type="string">status</parameter>
+     <parameter type="string">mc_priority</parameter>
+     <parameter type="string">date_reception</parameter>
+     <parameter type="string">bppm_cell</parameter>
+     <parameter type="string">host_address</parameter>
+     <parameter type="string">client_address</parameter>
+     <parameter type="string">mc_host</parameter>
+     <parameter type="string">mc_object</parameter>
+     <parameter type="string">mc_object_class</parameter>
+     <parameter type="string">mc_parameter</parameter>
+     <parameter type="string">mc_tool</parameter>
+     <parameter type="string">mc_tool_class</parameter>
+     <parameter type="string">causes</parameter>
+     <parameter type="string">effects</parameter>
+     <parameter type="string">message</parameter>
+   </mapped-input>
+
+  <!--
+   | Non-legacy Integration Services use the constants element to add or 
+   | replace tokens in an APClient map-data or message submission.  
+   | In the case of a map-data submission, the constants are applied 
+   | to the APXML message that results from applying the mapped-input.
+   +-->
+   <constants>
+    <!--
+     | 0 or more constants, each identifying an APXML token.  
+     | Order is unimportant.
+     |
+     | attribute: name
+     | values   : a valid APXML token name
+     | comments : the APXML token's name
+     |
+     | attribute: type
+     | values   : auto, string, or numeric
+     | comments : optional (defaults to auto), the APXML token's type 
+     |
+     | attribute: overwrite
+     | values   : true or false
+     | comments : optional (defaults to false), if true, any token with the
+     |            same name is replaced by this token; otherwise, this token
+     |            is only added if not already present
+     <constant name="device" type="string" overwrite="false">localhost</constant>
+     <constant name="my_first_constant">This is an auto-typed constant that is added to the inbound message if there is no existing my_first_constant token.</constant>
+     <constant name="my_second_constant" type="string" overwrite="true">This is a string constant that is added to the inbound message and overwrites any existing my_second_constant token.</constant>
+     +-->
+   </constants>
+   
+</integration-service>

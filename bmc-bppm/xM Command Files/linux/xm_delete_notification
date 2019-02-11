@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# xMatters Integration for BMC ProactiveNet Performance Management
+# Shell file that assembles APClient.bin command line from variables passed from BPPM - as command parameters and environment variables
+
+
+# home directory for xMatters Integration Agent
+IA_HOME=/opt/integrationagent
+APClient=${IA_HOME}/bin/APClient.bin
+
+# Optional log file to store calls to this shell script, comment out to disable
+logfile=${IA_HOME}/log/bppm.log
+
+if [ -z "${logfile}" ]
+then
+   logfile=/dev/null
+fi
+
+touch "${logfile}"
+
+echo userID: $1 >> $logfile
+userID=$1;
+
+echo mc_ueid: $mc_ueid >> $logfile
+echo severity: ${severity} >> $logfile
+echo status: "CLOSED" >> $logfile
+echo mc_priority: ${mc_priority} >> $logfile
+echo date_receiption: ${date_reception} >> $logfile
+echo cell_name: ${CELL_NAME} >> $logfile
+echo mc_host_address: ${mc_host_address} >> $logfile
+echo mc_client_address: ${mc_client_address} >> $logfile
+echo mc_host: ${mc_host} >> $logfile
+echo mc_object: ${mc_object} >> $logfile
+echo mc_object_class: ${mc_object_class} >> $logfile
+echo mc_parameter: ${mc_parameter} >> $logfile
+echo mc_tool: ${mc_tool} >> $logfile
+echo mc_tool_class: ${mc_tool_class} >> $logfile
+echo mc_smc_causes: ${mc_smc_causes} >> $logfile
+echo mc_smc_effects: ${mc_smc_effects} >> $logfile
+echo msg: ${msg} >> $logfile
+
+$APClient --map-data "applications|bmcbppm30" "${userID}" $mc_ueid "${severity}" "CLOSED" "${mc_priority}" "${date_reception}" "${CELL_NAME}" "${mc_host_address}" "${mc_client_address}" "${mc_host}" "${mc_object}" "${mc_object_class}" "${mc_parameter}" "${mc_tool}" "${mc_tool_class}" "${mc_smc_causes}" "${mc_smc_effects}" "${msg}"

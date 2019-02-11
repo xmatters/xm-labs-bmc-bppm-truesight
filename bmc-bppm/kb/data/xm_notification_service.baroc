@@ -1,0 +1,22 @@
+# ==============================================================================
+# xMatters Integration for BMC ProactiveNet Performance Management
+# ==============================================================================
+
+# Defines Notification Services that will deliver notifications to xMatters
+# via the xMatters command files
+
+IM_NOTIFICATION_SERVICE;
+	name='xMatters';
+	description='Executes the service to send a notification to xMatters';
+	type=SERVICE_TYPE_COMMAND;
+	service='xm_send_notification';
+	available_targets=[];
+END
+
+IM_NOTIFICATION_SERVICE;
+	name='xMatters_Delete';
+	description='Executes the service to delete a notification in xMatters';
+	type=SERVICE_TYPE_COMMAND;
+	service='xm_delete_notification';
+	available_targets=[];
+END

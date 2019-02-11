@@ -1,0 +1,50 @@
+# ==============================================================================
+# xMatters Integration for BMC ProactiveNet Performance Management
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# This rule will trigger a stop notification on a Critical event if a new 
+# non-critical event with matching host and object details is created.
+# ------------------------------------------------------------------------------
+new correlate_for_stop_notification : EVENT($EV) 
+   where [$EV.status == OPEN AND $EV.severity != CRITICAL] 
+   updates EVENT($INST) 
+      where [ $INST.status == OPEN AND 
+           $INST.severity == CRITICAL AND 
+          # $INST.hostname == $EV.hostname AND
+	     $INST.mc_object == $EV.mc_object AND
+	     $INST.mc_object_class == $EV.mc_object_class AND		
+          $INST.mc_host == $EV.mc_host AND 
+           $INST.mc_host_address == $EV.mc_host_address 
+          ] 
+      { 
+         #$INST.status = "CLOSED"; 
+        
+        # Stop the xMatters notification for this event, with no action event generated. 
+        execute($INST, xm_delete_notification, [], 'no');
+      } 
+END
+
+# ------------------------------------------------------------------------------
+# This rule will transfer the service name from the notification 
+# policy to event's notification_service slot.
+# ------------------------------------------------------------------------------
+# amagi: removed as it does not work for BPPM 8/9
+#execute im_internal_notification_workaround_for_collector:
+#    using_policy ALL
+#    {
+#         IM_NOTIFICATION_POLICY ($POL) where
+#        [ ($POL.enabled == 1) AND $POL.during_schedule == YES ]
+#    }
+#    $POL.selector_ecf ($EV) 
+#    using
+#    { 
+#        IM_NOTIFICATION_SERVICE ($SERV) where [ $SERV.name == $POL.notification_service ] 
+#    }
+#    when $EV.status within $POL.notify_on_operations
+#    {
+#	      $EV.notification_service=$SERV.service;
+#    }
+#END
+
+

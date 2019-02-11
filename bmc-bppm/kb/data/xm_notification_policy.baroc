@@ -1,0 +1,35 @@
+# ==============================================================================
+# xMatters Integration for BMC ProactiveNet Performance Management
+# ==============================================================================
+
+# --- Selector Templates ---
+
+SELECTOR;
+	based_on='EVENT';
+	name='xMatters.Selector_xMatters_Template';
+	description='Select all events to notify to xMatters';
+	ecfs=['EVENT($EV) where [$EV.severity equals CRITICAL ]'];
+	ecfs_descr=['Select all events to notify to xMatters'];
+END
+
+# --- Policy Templates ---
+
+IM_NOTIFICATION_POLICY;
+	name='Policy_xMatters_Template';
+	description='Notify events selected by Selector_xMatters_Template to xMatters''';
+	enabled=0;
+	active_timeframes=[];
+	except_timeframes=[];
+	selector_name='xMatters.Selector_xMatters_Template';
+	selector_class='EVENT';
+	selector_ecf=*xMatters.Selector_xMatters_Template ($EV);
+	ordinal=0;
+	notification_service='xMatters';
+	notify_targets=[xMatters_user];
+	notify_on_operations=[OPEN];
+	notify_msg_format='%s"Please create other notification polices similar to this sample notification policy. Keep this template policy disabled.';
+	notify_msg_slots=['$1.msg'];
+	auto_ack=0;
+	auto_assign=0;
+	assign_to_user='';
+END
