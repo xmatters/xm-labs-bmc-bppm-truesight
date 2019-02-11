@@ -29,8 +29,8 @@ This user needs to be able to work with events, but does not need to update admi
 Note: If you are installing this integration into an xMatters trial instance, you don't need to create a new user. Instead, locate the "Integration User" sample user that was automatically configured with the REST Web Service User role when your instance was created and assign them a new password. You can then skip ahead to the next section.
 
 It is recommended that you use the following formats for the REST API user's User ID:
-* **bppm-rest-<company name>-np** for your xMatters non-production environment
-* **bppm-rest-<company name>** for your xMatters production environment.
+* **bppm-rest-company-name-np** for your xMatters non-production environment
+* **bppm-rest-company-name** for your xMatters production environment.
 
 **To create a REST API user:**
 1. Log in to the target xMatters system.
@@ -58,7 +58,7 @@ The next step is to import the communication plan.
 
 ### Permissions
 
-### Accessing web service URLs
+### Accessing Web Service URL's
 To get the web service URL for a form, in the Web Service Only drop-down list, click Access Web Service URL. Copy the highlighted URL at the top of the dialog box.
 
 You'll need these URLs when you configure the rest of the integration.
@@ -72,13 +72,17 @@ Note: In the following instructions, <IAHOME> refers to the installation folder 
 The installation package contains all that you need to configure the integration.
 
 **To install the package:**
-1. Within the extracted integration archive, navigate to:[bmcbppm30](integration-agent/integrationservices)
+1. Within the extracted integration archive, navigate to: [bmcbppm30](integration-agent/integrationservices)
 2. Copy the bmcbppm30 folder to the `<IAHOME>\integrationservices` directory.
 3. Open the `<IAHOME>/conf/IAConfig.xml` file and add the following line to the "service-configs" section:
     * `<path>bmcbppm30/bmcbppm.xml</path>`
 4. Save and close the file.
 5. Open the `configuration.js` file found in the `<IAHOME>\integrationservices\bmcbppm30` folder and add or set the values for the following variables:
-
+| Variable        | Description           |
+| ------------- |:-------------:|
+| WEB_SERVICE_URL| See (Accessing Web Service URL's)[]|
+| col 2 is      | centered      |
+| zebra stripes | are neat      |
 
 
 
