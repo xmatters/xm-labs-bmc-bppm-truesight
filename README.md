@@ -298,5 +298,9 @@ To view the event notification:
 4. Close the Logs and Notes panel and wait for 30 seconds.
 5. Re-open the panel and check the Operations Log. There should be entries confirming SUCCESSFUL_DELIVERY by xMatters to the User Devices.
 
-# Troubleshooting
-In an older installation document, the following note appeared: *BPPM v9.5 and v9.6 require a known workaround from BMC, which has been documented here: https://kb.bmc.com/infocenter/index?page=content&id=KA411757&actp=search&viewlocale=en_US&searchid=1416520611157* However, the BMC URL has been deprecated. It is unknown what may be required.
+# Notes & Troubleshooting
+In an older installation document, the following note appeared:
+*BPPM v9.5 and v9.6 require a known workaround from BMC, which has been documented here: https://kb.bmc.com/infocenter/index?page=content&id=KA411757&actp=search&viewlocale=en_US&searchid=1416520611157*
+However, the BMC URL has been deprecated. It is unknown what may be required.
+
+If necessary, attached is the old integration documentation. This may be beneficial if issues arise during the configuration of BMC BPPM TrueSight. See [xm_bmc_bppm_v20.pdf](xm_bmc_bppm_v20.pdf)
