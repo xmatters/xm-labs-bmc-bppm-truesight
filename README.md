@@ -56,10 +56,20 @@ The next step is to import the communication plan.
 7. In the Web Service Only drop-down list, click Permissions.
 8. Enter the integration user you configured above, and then click Save Changes.
 
-### Permissions
+### Endpoint Permissions
+1. From within xMatters, navigate to the Developer tab
+2. Of the BMC BPPM TrueSight communication plan select Edit > Integration Builder
+3. From within the Integration Builder tab, select Edit Endpoints
+4. Assign the xMatters REST API user to the xMatters endpoint
 
-### Accessing Web Service URL's
-To get the web service URL for a form, in the Web Service Only drop-down list, click Access Web Service URL. Copy the highlighted URL at the top of the dialog box.
+### Accessing Web Service URL
+To retrieve the Web Service URL:
+1. From within xMatters, navigate to the Developer tab
+2. Of the BMC BPPM TrueSight communication plan select Edit > Integration Builder
+3. Select the Inbound integration builder
+4. Scroll to the bottom of the screen to find the URL
+
+**Note**: Ensure that the Inbound Integration Builder has the authentication set to Basic
 
 You'll need these URLs when you configure the rest of the integration.
 
@@ -78,7 +88,7 @@ The installation package contains all that you need to configure the integration
     * `<path>bmcbppm30/bmcbppm.xml</path>`
 4. Save and close the file.
 5. Open the `configuration.js` file found in the `<IAHOME>\integrationservices\bmcbppm30` folder and add or set the values for the following variables:
-    * **WEB_SERVICE_URL**: See [Accessing Web Service URL's](https://github.com/matthewhenry1/xm-labs-bmc-bppm-truesight#accessing-web-service-urls)
+    * **WEB_SERVICE_URL**: See [Accessing Web Service URL's](https://github.com/matthewhenry1/xm-labs-bmc-bppm-truesight#accessing-web-service-url)
     * **BPPM_CELL**: Name of the BPPM cell
     * **IIWS_URL**: BMC Impact Integration Web Services endpoint
     * **INITIATOR**: The User ID of the integration user you configured in xMatters.
@@ -289,8 +299,4 @@ To view the event notification:
 5. Re-open the panel and check the Operations Log. There should be entries confirming SUCCESSFUL_DELIVERY by xMatters to the User Devices.
 
 # Troubleshooting
-In an older installation document, the following note appeared:
-```
-BPPM v9.5 and v9.6 require a known workaround from BMC, which has been documented here: https://kb.bmc.com/infocenter/index?page=content&id=KA411757&actp=search&viewlocale=en_US&searchid=1416520611157
-```
-However, the BMC URL has been deprecated. It is unknown what may be required.
+In an older installation document, the following note appeared: *BPPM v9.5 and v9.6 require a known workaround from BMC, which has been documented here: https://kb.bmc.com/infocenter/index?page=content&id=KA411757&actp=search&viewlocale=en_US&searchid=1416520611157* However, the BMC URL has been deprecated. It is unknown what may be required.
