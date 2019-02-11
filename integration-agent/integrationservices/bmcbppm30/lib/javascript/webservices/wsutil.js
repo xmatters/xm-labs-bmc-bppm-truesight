@@ -7,7 +7,6 @@ importClass(Packages.com.alarmpoint.integrationagent.soap.exception.SOAPRequestE
 importClass(Packages.javax.net.ssl.SSLContext);
 importClass(Packages.javax.net.ssl.TrustManager);
 importClass(Packages.org.apache.commons.lang.StringEscapeUtils);
-importClass(Packages.org.apache.commons.codec.binary.Base64);
 importClass(Packages.org.apache.http.conn.ssl.SSLSocketFactory);
 
 // Add functionality to the JavaScript String prototype
@@ -42,31 +41,31 @@ var WSUtil = BaseClass.extend({
   HEAD: "HEAD",
 
   // Use SSL but trust any certificate (including self-signed ones).
-  // This SHOULD NOT be used for productive systems due to security reasons, 
-  // unless it is a conscious decision and you are perfectly aware of security 
-  // implications of accepting self-signed certificates  
+  // This SHOULD NOT be used for productive systems due to security reasons,
+  // unless it is a conscious decision and you are perfectly aware of security
+  // implications of accepting self-signed certificates
   ACCEPT_ANY_CERTIFICATE: true,
-  
+
   // File/Path for the Java Keystore containing the trusted certificate chain
   KEY_STORE: "jre/lib/security/cacerts",
-  
+
   // Password for the Java Keystore containing the trusted certificate chain
   KEY_STORE_PASSWORD: "changeit",
-  
+
   // SSL Socket Factory used for SSL communication
   SSL_SOCKET_FACTORY: null,
 
-  // Determines connection pooling behaviour. Default is to re-use HTTP 
+  // Determines connection pooling behaviour. Default is to re-use HTTP
   // connections.
   CLOSE_CONNECTION_PER_REQUEST: false,
-  
+
   // HTTP connection constants
   MAX_CONNECTIONS: 20,
   IDLE_CONNECTION_TIMEOUT_MILLIS: 30000,
   CONNECTION_ESTABLISH_TIMEOUT_MILLIS: 30000,
   CONNECTION_READ_TIMEOUT_MILLIS: 30000,
   STALE_CONNECTION_CHECK: true,
-  
+
   PROXY_CONFIG : {
           hostIp : null,
           port : 0,
@@ -74,7 +73,7 @@ var WSUtil = BaseClass.extend({
           password : null,
           ntlmDomain : null
   },
-  
+
   /**
    * Constructor
    */
@@ -97,7 +96,7 @@ var WSUtil = BaseClass.extend({
     this.PROXY_CONFIG.password = password;
     this.PROXY_CONFIG.ntlmDomain = ntlmDomain;
   },
-  
+
   /**
    * Sends the request to the SOAP endpoint and returns the response
    * @param url EndPoint for the webservice request
@@ -146,7 +145,7 @@ var WSUtil = BaseClass.extend({
     var response = soapRequest.post(msg.getSoapEnvelope(msg.getRequest()));
     return new XML(this.formatStringForE4X(String(response))).soap::Body;
   },
-  
+
     /**
    * Sends the request to the REST endpoint and returns the response
    * @param protocol HTTP or HTTPS
@@ -154,7 +153,7 @@ var WSUtil = BaseClass.extend({
    * @param port integer representing the port the REST service is exposed on
    * @param rootPath path for the REST service
    * @param username name of the user making the request
-   * @param password clear text password (that will be encrypted prior to sending to the REST service) 
+   * @param password clear text password (that will be encrypted prior to sending to the REST service)
    * @param method String representing the request method (GET, POST, PUT etc)
    * @param request body of the request to send to the REST Service
    * @param headers array of Request Headers to be added to the Request
@@ -165,7 +164,7 @@ var WSUtil = BaseClass.extend({
     var key = protocol + "|" + server + "|" + port + "|" + rootPath;
     var httpClient = httpClientMap.get(key);
     var acceptAnyCertificate = this.ACCEPT_ANY_CERTIFICATE;
-    
+
     if (httpClient == null)
     {
       if (protocol.toLowerCase().startsWith("https"))
@@ -184,7 +183,7 @@ var WSUtil = BaseClass.extend({
       httpClient.setupProxy(this.PROXY_CONFIG.hostIp, this.PROXY_CONFIG.port, this.PROXY_CONFIG.username, this.PROXY_CONFIG.password, this.PROXY_CONFIG.ntlmDomain);
       httpClientMap.put(key, httpClient);
     }
-    
+
     if (headers != null)
     {
       for (var it = headers.keySet().iterator(); it.hasNext();)
@@ -195,7 +194,7 @@ var WSUtil = BaseClass.extend({
         httpClient.addHeader(key, value);
       }
     }
-    
+
     var response = null;
     var responseStr = "";
     if (this.POST.equalsIgnoreCase(method))
@@ -213,7 +212,7 @@ var WSUtil = BaseClass.extend({
       response = httpClient.executeHttpPut(request);
       responseStr = httpClient.getResponseAsString(response);
     }
-    
+
     //If there is a response body we are probably more interested in that so return it.
     if (responseStr != "")
     {
@@ -233,18 +232,18 @@ var WSUtil = BaseClass.extend({
     var encoder = new Base64();
     return new java.lang.String(encoder.encodeBase64(new java.lang.String(msg).getBytes("UTF8")), "UTF8");
   },
-  
+
   /**
    * At implementation time it was found that Mozilla's implementation of E4X
    * does not support XML declarations (<? ... ?>), therefore if it exists in
    * the payload returned from a webservice call, it needs to be stripped out.
-   * http://www.xml.com/pub/a/2007/11/28/introducing-e4x.html?page=4   
-   * 
+   * http://www.xml.com/pub/a/2007/11/28/introducing-e4x.html?page=4
+   *
    * This method takes a parameter:
    * 1. Ensures it is a string
    * 2. Removes any XML declarations
    * 3. returns a string which can be used to create E4X objects such as
-   *    XML or XMLList.                         
+   *    XML or XMLList.
    */
   formatStringForE4X: function(string)
   {
@@ -287,14 +286,14 @@ var WSUtil = BaseClass.extend({
           object[fieldName] = child;
         }
       }
-      else 
+      else
       {
         object[fieldName] = String(field);
       }
     }
     return object;
   },
-  
+
 
   /**
    * The default implementation of SSL between the IA and REST/SOAP endpoints
@@ -306,7 +305,7 @@ var WSUtil = BaseClass.extend({
    * The trusted certificate MUST be imported into the Java Keystore used by
    * the Integration Agent (conf/.keystore) using the credentials defined above.
    * In order for the trust chain to be enabled, the ACCEPT_ANY_CERTIFICATE
-   * property above MUST be set to false                                         
+   * property above MUST be set to false
    */
   getSSLSocketFactory: function()
   {
@@ -314,7 +313,7 @@ var WSUtil = BaseClass.extend({
     {
       var sslContext = SSLContext.getInstance("TLS");
       var trustManagers = java.lang.reflect.Array.newInstance(TrustManager, 1);
-      trustManagers[0] = new DefaultX509TrustManager(this.KEY_STORE, this.KEY_STORE_PASSWORD); 
+      trustManagers[0] = new DefaultX509TrustManager(this.KEY_STORE, this.KEY_STORE_PASSWORD);
       sslContext.init(null, trustManagers , null);
       this.SSL_SOCKET_FACTORY = new SSLSocketFactory(sslContext, SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
     }

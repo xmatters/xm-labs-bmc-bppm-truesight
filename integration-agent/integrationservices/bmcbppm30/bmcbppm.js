@@ -330,7 +330,7 @@ function terminateEventByIncident(incident_id) {
 
     // Get event by incident_id property
     var response = XMIO.get(REST_SERVICE_URL + "/events?status=ACTIVE&propertyName=incident_id%23en&propertyValue=" + incident_id);
-    IALOG.debug("terminateEventByIncident - XMIO.get response.body: " + JSON.stringify(response.body));
+
     var events = JSON.parse(response.body);
     var total = parseInt(events.total);
   } catch (err) {
@@ -355,7 +355,7 @@ function terminateEventByIncident(incident_id) {
           status: 'TERMINATED'
         }), termURL);
         IALOG.info("RESPONSE CODE " + response.status)
-        if (response.status == 200) {
+        if (response.status >= 200 && response.status <= 299) {
           IALOG.info("terminateEventByIncident - Event associated with incident_id '" + incident_id + "' has been terminated.")
         } else {
           IALOG.warn("terminateEventByIncident - Event associated with incident_id '" + incident_id + "' has failed to terminate.")
