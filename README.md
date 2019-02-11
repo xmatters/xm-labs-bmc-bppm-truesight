@@ -80,7 +80,7 @@ The installation package contains all that you need to configure the integration
 5. Open the `configuration.js` file found in the `<IAHOME>\integrationservices\bmcbppm30` folder and add or set the values for the following variables:
 | Variable        | Description           |
 | ------------- |:-------------:|
-| WEB_SERVICE_URL| See (Accessing Web Service URL's)[]|
+| WEB_SERVICE_URL| See [Accessing Web Service URL's](https://github.com/matthewhenry1/xm-labs-bmc-bppm-truesight#accessing-web-service-urls)|
 | col 2 is      | centered      |
 | zebra stripes | are neat      |
 
