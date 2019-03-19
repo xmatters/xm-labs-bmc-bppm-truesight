@@ -13,10 +13,15 @@ This article provides installation, configuration, and implementation details fo
 * [integration-agent](integration-agent) - This folder contains integration agent related files
 
 # How it works
-Add some info here detailing the overall architecture and how the integration works. The more information you can add, the more helpful this sections becomes. For example: An action happens in Application XYZ which triggers the thingamajig to fire a REST API call to the xMatters inbound integration on the imported communication plan. The integration script then parses out the payload and builds an event and passes that to xMatters.
+Through integration modules, xMatters can become the voice and interface of an automation engine or intelligent
+application (the Management System, such as BMC ProactiveNet Performance Management). When BMC BPPM
+detects something that requires attention, xMatters places phone calls, sends pages, messages, or emails to the
+appropriate personnel, vendors or customers.
 
 # Installation
-Details of the installation go here.
+Welcome to xMatters (IT) for BMC ProactiveNet Performance Management. This document describes how to install
+and configure the xMatters (IT) for BMC ProactiveNet Performance Management software integration. The intended
+audience for this document is experienced consultants, system administrators and other technical readers.
 
 ## Configure xMatters
 The first step in setting up your integration is to configure xMatters.
