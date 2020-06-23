@@ -86,6 +86,9 @@ To retrieve the Web Service URL:
 You'll need these URLs when you configure the rest of the integration.
 
 ### Configure the Event Domain
+
+**NOTE:** Event domains are no longer exposed to end users or company administrators. You will need to open an xMatters [support ticket](https://support.xmatters.com/hc/en-us/requests/new) and give them these steps to perform. 
+
 1. Navigate to the Workflows page
 2. On the lefthand side select Event Domains below Domains
 3. From within Event Domains, select applications
