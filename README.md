@@ -1,14 +1,21 @@
 # BMC ProactiveNet Performance Management and BMC TrueSight
 This article provides installation, configuration, and implementation details for integrating xMatters On-Demand with BMC ProactiveNet Performance Management (BPPM) version 9.x. This integration has also been successfully deployed with BMC TrueSight, the latest version of/successor to BMC BPPM. Additional configuration steps for BMC TrueSight integrations are noted in the text.
 
+<kbd>
+<a href="https://support.xmatters.com/hc/en-us/community/topics">
+   <img src="https://github.com/xmatters/xMatters-Labs/raw/master/media/disclaimer.png">
+</a>
+</kbd>
+
+
 # Pre-Requisites
 * An account and login information for BPPM (v9.0.5, v9.5 or v9.6)
 * Access to the BPPM server to install the xMatters integration agent
-* Access to your xMatters On-Demand environment and the ability to create communication plans
+* Access to your xMatters On-Demand environment and the ability to create workflows
 * A xMatters Integration Agent that is connected to the xMatters OnDemand instance
 
 # Files
-* [BMCBPPMIntegration30.zip](BMCBPPMIntegration30.zip) - xMatters Communication Plan
+* [BMCBPPMIntegration30.zip](BMCBPPMIntegration30.zip) - xMatters workflow
 * [bmc-bppm](bmc-bppm) - This folder contains bmc-bppm related files
 * [integration-agent](integration-agent) - This folder contains integration agent related files
 
@@ -46,15 +53,15 @@ It is recommended that you use the following formats for the REST API user's Use
 6. On the next page, set the web login ID and password.
 7. Make a note of these details; you will need them when configuring other parts of this integration.
 
-### Import the communication plan
-The next step is to import the communication plan.
+### Import the Workflow
+The next step is to import the workflow.
 
-**To import the communication plan:**
-1. In the target xMatters system, on the Developer tab, click Import Plan.
+**To import the Workflow:**
+1. In the target xMatters system, on the Workflows page, click Import.
 2. Click Browse, and then locate the following file within the extracted integration archive:
 [BMCBPPMIntegration30.zip](BMCBPPMIntegration30.zip)
 3. Click Import Plan.
-4. Once the communication plan has been imported, click Plan Disabled to enable the plan.
+4. Once the workflow has been imported, click Plan Disabled to enable the plan.
 5. In the Edit drop-down list, select Forms.
 6. For the BPPM Incident form, in the Not Deployed drop-down list, click Create Event Web Service.
     * After you create the web service, the drop-down list label will change to Web Service Only.
@@ -62,15 +69,15 @@ The next step is to import the communication plan.
 8. Enter the integration user you configured above, and then click Save Changes.
 
 ### Endpoint Permissions
-1. From within xMatters, navigate to the Developer tab
-2. Of the BMC BPPM TrueSight communication plan select Edit > Integration Builder
+1. From within xMatters, navigate to the Workflows page
+2. Of the BMC BPPM TrueSight workflow select Edit > Integration Builder
 3. From within the Integration Builder tab, select Edit Endpoints
 4. Assign the xMatters REST API user to the xMatters endpoint
 
 ### Accessing Web Service URL
 To retrieve the Web Service URL:
-1. From within xMatters, navigate to the Developer tab
-2. Of the BMC BPPM TrueSight communication plan select Edit > Integration Builder
+1. From within xMatters, navigate to the Workflows page
+2. Of the BMC BPPM TrueSight workflow select Edit > Integration Builder
 3. Select the Inbound integration builder
 4. Scroll to the bottom of the screen to find the URL
 
@@ -79,7 +86,7 @@ To retrieve the Web Service URL:
 You'll need these URLs when you configure the rest of the integration.
 
 ### Configure the Event Domain
-1. Navigate to the Developer tab
+1. Navigate to the Workflows page
 2. On the lefthand side select Event Domains below Domains
 3. From within Event Domains, select applications
 4. Scroll to the bottom and select **Add New**
